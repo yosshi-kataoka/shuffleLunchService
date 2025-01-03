@@ -1,0 +1,9 @@
+docker/db/mysql_data
+src/vendor
+
+# // 本来の開発環境では下記もgitの対象外とします。
+# docker/db/db-variables.env
+# src/phpcs.xml
+# src/phpmd.xml
+# src/phpstan.neon
+# src/phpunit.xml
