@@ -1,15 +1,12 @@
 {
-    "name": "root/html",
-    "require-dev": {
-        "squizlabs/php_codesniffer": "3.*",
-        "phpmd/phpmd": "@stable",
-        "phpstan/phpstan": "^0.12.78",
-        "phpunit/phpunit": "^9.5"
-    },
-    "scripts": {
-        "phpcs": "./vendor/bin/phpcs --standard=phpcs.xml",
-        "phpmd": "./vendor/bin/phpmd . text phpmd.xml --suffixes php --exclude vendor",
-        "phpstan": "./vendor/bin/phpstan analyse -c phpstan.neon",
-        "phpunit": "./vendor/bin/phpunit"
+  "name": "root/html",
+  "autoload": {
+    "psr-4": {
+      "Root\\Html\\": "src/"
     }
+  },
+  "require": {
+    "twbs/bootstrap": "5.3.0",
+    "scssphp/scssphp": "^1.13.0"
+  }
 }
