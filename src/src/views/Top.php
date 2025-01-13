@@ -15,6 +15,7 @@
     <div class="container px-0">
       <h2><span class="fa-solid fa-user"></span>社員を登録する</h2>
       <button type="button" class="btn btn-primary my-3">シャッフルする</button>
+      <h2>グループ結果</h2>
       <div class="border">
 
       </div>
