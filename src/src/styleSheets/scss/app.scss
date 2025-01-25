@@ -63,6 +63,13 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Y
 
 @import "/var/www/html/vendor/twbs/bootstrap/scss/bootstrap.scss";
 
+a {
+  color: inherit;
+  /* 親要素のフォントカラーを継承 */
+  text-decoration: none;
+  /* 下線を削除 */
+}
+
 body {
   letter-spacing: .1em;
   text-align: justify;

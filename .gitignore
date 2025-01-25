@@ -1,6 +1,7 @@
 docker/db/mysql_data
 src/vendor
 src/src/styleSheets/css
+.env
 # // 本来の開発環境では下記もgitの対象外とします。
 # docker/db/db-variables.env
 # src/phpcs.xml
