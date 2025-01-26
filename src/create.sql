@@ -8,8 +8,7 @@ DROP TABLE IF EXISTS
   name;
 
 CREATE TABLE list_employees (
-    id INT PRIMARY KEY
-    AUTO_INCREMENT NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(100) NOT NULL
 );
 
@@ -25,3 +24,6 @@ INTO TABLE
 SET
   id = @col1,
   name = @col2;
+
+UPDATE
+  list_employees SET name = REPLACE(name, "'", "");
