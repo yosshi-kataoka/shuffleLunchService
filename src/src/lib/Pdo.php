@@ -23,3 +23,19 @@ function dbConnect(): PDO
     error_log($e->getMessage());
   }
 }
+
+function getEmployeesRegister(PDO $pdo): array
+{
+  try {
+    $statement = $pdo->prepare('SELECT id,name FROM list_employees');
+    $statement->execute();
+    $results = [];
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+      $results[] = $row;
+    }
+    return $results;
+  } catch (PDOException $e) {
+    error_log('Error: fail to  get database information') . PHP_EOL;
+    error_log($e->getMessage());
+  }
+}
