@@ -9,8 +9,6 @@ $employeeName = [
   'name' => '',
 ];
 $errors = [];
-$pdo = dbConnect();
-$employeeRegisters = getEmployeesRegister($pdo);
 $title = 'シャッフルランチサービス';
 $contents = __DIR__ . '/views/RegisterEmployee.php';
 include __DIR__ . '/views/Layout.php';
