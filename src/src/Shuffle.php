@@ -18,16 +18,16 @@ function shuffleEmployeesRegister(array $employeesRegisters): array
   return $results;
 }
 
-function splitOfArray($shuffleEmployeesRegisters): array
+function splitOfArray(array $employeesRegisters): array
 {
-  $splitArray = array_chunk($shuffleEmployeesRegisters, NUMBER_OF_DIVISION);
+  $splitArray = array_chunk($employeesRegisters, NUMBER_OF_DIVISION);
   return $splitArray;
 }
 
 // メインルーチン
 $pdo = dbConnect();
 $employeesRegisters = getEmployeesRegister($pdo);
-$shuffleEmployeesRegisters =  shuffleEmployeesRegister($employeesRegisters);
+$shuffleEmployees =  shuffleEmployeesRegister($employeesRegisters);
 $title = 'シャッフルランチサービス';
 $contents = __DIR__ . '/views/Top.php';
 include __DIR__ . '/views/Layout.php';

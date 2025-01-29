@@ -14,7 +14,8 @@ function dbConnect(): PDO
   $dotenv->load();
 
   try {
-    $pdo = new PDO('mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'] .  '; charset=utf8mb4', $_ENV['DB_USER'],  $_ENV['DB_PASSWORD']);
+    $pdo = new PDO('mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'] .  ';
+    charset=utf8mb4', $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     return $pdo;
@@ -24,6 +25,7 @@ function dbConnect(): PDO
   }
 }
 
+// データベースより社員名と社員idを取得する処理
 function getEmployeesRegister(PDO $pdo): array
 {
   try {
@@ -37,5 +39,21 @@ function getEmployeesRegister(PDO $pdo): array
   } catch (PDOException $e) {
     error_log('Error: fail to  get database information') . PHP_EOL;
     error_log($e->getMessage());
+  }
+}
+
+//　入力フォームに入力した社員名をデータベースに登録する処理
+function registeringEmployee(PDO $pdo, array $employeeName): void
+{
+  $pdo->beginTransaction();
+  try {
+    $statement = $pdo->prepare('INSERT INTO list_employees (name) values (:name)');
+    $statement->bindValue(':name', $employeeName['name'], PDO::PARAM_STR);
+    $statement->execute();
+    $pdo->commit();
+  } catch (PDOException $e) {
+    error_log('Error: failed to register in the database') . PHP_EOL;
+    error_log('Debugging Error:' . $e->getMessage());
+    $pdo->rollBack();
   }
 }
