@@ -9,7 +9,8 @@ require_once(__DIR__ . '/lib/Pdo.php');
 require_once(__DIR__ . '/lib/Escape.php');
 
 
-const NUMBER_OF_DIVISION = 3;
+const NUMBER_OF_THREE_DIVISION = 3;
+const NUMBER_OF_TWO_DIVISION = 2;
 
 function shuffleEmployeesRegister(array $employeesRegisters): array
 {
@@ -20,7 +21,16 @@ function shuffleEmployeesRegister(array $employeesRegisters): array
 
 function splitOfArray(array $employeesRegisters): array
 {
-  $splitArray = array_chunk($employeesRegisters, NUMBER_OF_DIVISION);
+  $cnt = count($employeesRegisters);
+  if ($cnt % 3 === 0) {
+    $splitArray = array_chunk($employeesRegisters, NUMBER_OF_THREE_DIVISION);
+  } elseif ($cnt % 2 === 0) {
+    $splitArray = array_chunk($employeesRegisters, NUMBER_OF_TWO_DIVISION);
+  } else {
+    $extra = array_pop($employeesRegisters);
+    $splitArray = array_chunk($employeesRegisters, NUMBER_OF_TWO_DIVISION);
+    array_push($splitArray[0], $extra);
+  }
   return $splitArray;
 }
 
