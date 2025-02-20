@@ -3,12 +3,16 @@
   "autoload": {
     "psr-4": {
       "Root\\Html\\": "src/"
-    }
+    },
+    "files": [
+      "lib/Escape.php",
+      "lib/Database.php"
+    ]
   },
   "require": {
-    "twbs/bootstrap": "5.3.0",
     "scssphp/scssphp": "^1.13.0",
-    "vlucas/phpdotenv": "^5.6"
+    "vlucas/phpdotenv": "^5.6",
+    "twbs/bootstrap": "^5.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.*",
