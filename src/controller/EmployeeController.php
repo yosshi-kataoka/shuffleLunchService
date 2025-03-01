@@ -8,9 +8,7 @@ class EmployeeController extends Controller
 {
   public function index()
   {
-    $errors = [];
-    $pdo = dbConnect();
-    $employeeRegisters = getEmployeesRegister($pdo);
+    $employeeRegisters = $this->databaseManager->get('Employee')->fetchAllNames();
 
     return $this->render(
       [
@@ -27,20 +25,18 @@ class EmployeeController extends Controller
       throw new HttpNotFoundException();
     }
     $errors = [];
-    $employeeName['name'] = $_POST['name'];
-    $errors = $this->validate($employeeName);
-    $pdo = dbConnect();
-    $employeeRegisters = getEmployeesRegister($pdo);
+    $employee = $this->databaseManager->get('Employee');
+    $employees = $employee->fetchAllNames();
+    $errors = $this->validate($_POST);
     if (!count($errors)) {
-      registeringEmployee($pdo, $employeeName);
-      header('Location: /employee');
+      $employee->insert($_POST['name']);
     }
 
     return $this->render(
       [
         'title' => '社員の登録',
         'errors' => $errors,
-        'employeeRegisters' => $employeeRegisters,
+        'employeeRegisters' => $employees,
       ],
       'index'
     );

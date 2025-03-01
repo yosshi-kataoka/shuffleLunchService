@@ -11,7 +11,6 @@ class ShuffleController extends Controller
 
   public function index()
   {
-    $pdo = dbConnect();
     return $this->render([
       'shuffleEmployees' => [],
     ]);
@@ -24,15 +23,14 @@ class ShuffleController extends Controller
     }
 
     $shuffleEmployees = [];
-    $pdo = dbConnect();
-    $employeesRegisters = getEmployeesRegister($pdo);
-    $shuffleEmployees =  $this->shuffleEmployeesRegister($employeesRegisters);
+    $employees = $this->databaseManager->get('Employee')->fetchAllNames();
+    $shuffleEmployees = $this->shuffleEmployees($employees);
     return $this->render([
       'shuffleEmployees' => $shuffleEmployees,
     ], 'index');
   }
 
-  private function shuffleEmployeesRegister(array $employeesRegisters): array
+  private function shuffleEmployees(array $employeesRegisters): array
   {
     shuffle($employeesRegisters);
     $results = $this->splitOfArray($employeesRegisters);
