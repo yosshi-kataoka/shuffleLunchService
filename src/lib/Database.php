@@ -14,7 +14,7 @@ function dbConnect(): PDO
   $dotenv->load();
 
   try {
-    $pdo = new PDO('mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'] .  ';
+    $pdo = new PDO('mysql:host=' . $_ENV['hostname'] . ';dbname=' . $_ENV['DB_DATABASE'] .  ';
     charset=utf8mb4', $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

@@ -3,13 +3,14 @@
 namespace ShuffleLunch;
 
 use HttpNotFoundException;
+use Dotenv;
 
 class Application
 {
-  public $request;
-
+  protected $request;
   protected $router;
   protected $response;
+  protected $databaseManager;
 
 
   public function __construct()
@@ -17,6 +18,17 @@ class Application
     $this->router = new Router($this->registerRouters());
     $this->request = new Request();
     $this->response = new Response();
+    $this->databaseManager = new DatabaseManager();
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__  . '/');
+    $dotenv->load();
+    $this->databaseManager->connect(
+      [
+        'hostname' => $_ENV['DB_HOST'],
+        'username' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD'],
+        'database' => $_ENV['DB_DATABASE'],
+      ]
+    );
   }
 
   public function run()
@@ -34,6 +46,16 @@ class Application
     }
     // HTTPレスポンスを返す処理
     $this->response->send();
+  }
+
+  public function getDatabaseManager()
+  {
+    return $this->databaseManager;
+  }
+
+  public function getRequest()
+  {
+    return $this->request;
   }
 
   private function runAction($controllerName, $action)

@@ -5,8 +5,7 @@
       "Root\\Html\\": "src/"
     },
     "files": [
-      "lib/Escape.php",
-      "lib/Database.php"
+      "lib/Escape.php"
     ]
   },
   "require": {
