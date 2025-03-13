@@ -70,9 +70,18 @@ class EmployeeController extends Controller
     if (!$this->request->isPost()) {
       throw new HttpNotFoundException();
     }
-    $errors = $this->validateSelect($_POST);
+    if ($_POST['dropdownValue'] === 'default') {
+      $errors['select'] = '修正する社員が未選択です。';
+    } else {
+      $selectEmployee = json_decode($_POST['dropdownValue'], true);
+      $selectEmployeeName = $selectEmployee['name'];
+      $selectEmployeeId = $selectEmployee['id'];
+      $employees = $this->databaseManager->get('Employee');
+      $employeesList = $employees->fetchAllNames();
+      $existsIdNumbers = array_column($employeesList, 'id');
+      $errors = $this->validateSelect($_POST,  $selectEmployeeName, $existsIdNumbers);
+    }
     if ($errors) {
-      $employees = $this->databaseManager->get('Employee')->fetchAllNames();
       return $this->render(
         [
           'title' => '社員情報の修正',
@@ -82,8 +91,8 @@ class EmployeeController extends Controller
         'select'
       );
     }
-    //todo 選択した社員の情報を表示させるロジックを実装
-    $selectEmployee = json_decode($_POST['dropdownValue'], true);
+    $updateDetails = $this->checkUpdate($_POST, $selectEmployeeName, $selectEmployeeId);
+    $employees->update($updateDetails, $selectEmployeeId);
     // todo 選択した社員情報を表示するupdateページを作成
     return $this->render(
       [
@@ -93,14 +102,33 @@ class EmployeeController extends Controller
     );
   }
 
-  private function validateSelect($post): array
+  private function validateSelect($post, $selectEmployeeName, $existsIdNumbers): array
   {
     $errors = [];
-    if ($post['dropdownValue'] === 'default') {
-      $errors['notSelectEmployee'] = '修正する社員が未選択です。';
-    } elseif ($post['updateEmployeeName'] === '' && $post['updateEmployeeId'] === '') {
-      $errors['notSelectUpdate'] = '修正する内容が入力されておりません。';
+    if ($post['updateEmployeeName'] === '' && $post['updateEmployeeId'] === '') {
+      $errors['update'] = '修正する内容が入力されておりません。';
+    }
+    if ($selectEmployeeName === $post['updateEmployeeName']) {
+      $errors['updateName'] = '修正後の従業員名が選択された従業員名と同じ名前になっています。';
+    }
+    if ($this->isIdExists($post['updateEmployeeId'], $existsIdNumbers)) {
+      $errors['updateId'] = '修正後の従業員idは既に存在しております。別の値のidを入力してください。';
     }
     return $errors;
+  }
+
+  private function isIdExists($updateEmployeeId, $existsIdNumbers)
+  {
+    return in_array($updateEmployeeId, $existsIdNumbers);
+  }
+
+  private function checkUpdate($updateDetails, $selectEmployeeName, $selectEmployeeId)
+  {
+    if ($updateDetails['updateEmployeeName'] === '') {
+      $updateDetails['updateEmployeeName'] = $selectEmployeeName;
+    } elseif ($updateDetails['updateEmployeeId'] === '') {
+      $updateDetails['updateEmployeeId'] = $selectEmployeeId;
+    }
+    return $updateDetails;
   }
 }
