@@ -13,4 +13,9 @@ class Employee extends DatabaseModel
   {
     $this->execute('INSERT INTO list_employees (name) VALUES(?)', [$name]);
   }
+
+  public function update($updateEmployee, $selectEmployeeId)
+  {
+    $this->execute('UPDATE list_employees SET id = ?, name = ? WHERE id = ?;', [$updateEmployee['updateEmployeeId'], $updateEmployee['updateEmployeeName'], $selectEmployeeId]);
+  }
 }
