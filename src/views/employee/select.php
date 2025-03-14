@@ -1,5 +1,5 @@
 <?php
-// こちらでは社員の登録ページの内容を記載
+
 use function  ShuffleLunch\escape;
 ?>
 

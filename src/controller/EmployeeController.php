@@ -97,7 +97,6 @@ class EmployeeController extends Controller
     return $this->render(
       [
         'title' => '社員情報の更新完了',
-        'selectEmployee' => $selectEmployee,
       ]
     );
   }
@@ -129,5 +128,64 @@ class EmployeeController extends Controller
       $updateDetails['updateEmployeeId'] = $selectEmployeeId;
     }
     return $updateDetails;
+  }
+
+  public function delete()
+  {
+    $employeeRegisters = $this->databaseManager->get('Employee')->fetchAllNames();
+    return $this->render(
+      [
+        'title' => '社員の削除',
+        'errors' => [],
+        'employeeRegisters' => $employeeRegisters,
+      ]
+    );
+  }
+
+  // 選択した社員を削除してよいかの確認画面を表示
+  public function deleteCheck()
+  {
+    if (!$this->request->isPost()) {
+      throw new HttpNotFoundException();
+    }
+    if ($_POST['dropdownValue'] === 'default') {
+      $errors['select'] = '削除する社員が未選択です。';
+      $employeeRegisters = $this->databaseManager->get('Employee')->fetchAllNames();
+      return $this->render(
+        [
+          'title' => '社員の削除',
+          'errors' => $errors,
+          'employeeRegisters' => $employeeRegisters,
+        ],
+        'delete'
+      );
+    }
+    $deleteEmployee = json_decode($_POST['dropdownValue'], true);
+    $deleteEmployeeName = $deleteEmployee['name'];
+    $deleteEmployeeId = $deleteEmployee['id'];
+
+    return $this->render(
+      [
+        'title' => '削除する社員の確認',
+        'deleteEmployeeName' => $deleteEmployeeName,
+        'deleteEmployeeId' => $deleteEmployeeId,
+      ]
+    );
+  }
+
+  public function deleteComplete()
+  {
+    if (!$this->request->isPost()) {
+      throw new HttpNotFoundException();
+    }
+    $deleteEmployee = json_decode($_POST['deleteEmployee'], true);
+    $deleteEmployeeId = $deleteEmployee['id'];
+    $employee = $this->databaseManager->get('employee');
+    $employee->delete($deleteEmployeeId);
+    return $this->render(
+      [
+        'title' => '社員を削除しました',
+      ]
+    );
   }
 }

@@ -8,6 +8,9 @@ use function  ShuffleLunch\escape;
     <span class="fa-solid fa-user"></span>社員を登録する</a><br>
   <a href="employee/select" class="fs-2 inline-block text-decoration-none">
     <span class="fa-solid fa-user"></span>社員情報を変更する</a><br>
+  <a href="employee/delete" class="fs-2 inline-block text-decoration-none">
+    <span class="fa-solid fa-user"></span>社員を削除する</a><br>
+
   <form action="shuffle" method="POST">
     <button type="submit" class="btn btn-primary my-3">シャッフルする</button>
   </form>
