@@ -18,4 +18,9 @@ class Employee extends DatabaseModel
   {
     $this->execute('UPDATE list_employees SET id = ?, name = ? WHERE id = ?;', [$updateEmployee['updateEmployeeId'], $updateEmployee['updateEmployeeName'], $selectEmployeeId]);
   }
+
+  public function delete($deleteEmployeeId)
+  {
+    $this->execute('DELETE FROM list_employees WHERE id = ?', [$deleteEmployeeId]);
+  }
 }

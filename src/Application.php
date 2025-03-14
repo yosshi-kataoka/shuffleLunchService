@@ -78,7 +78,9 @@ class Application
       '/employee/select' => ['controller' => 'employee', 'action' => 'select'],
       '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
       '/employee/update' => ['controller' => 'employee', 'action' => 'Update'],
-      '/employee/updateFinish' => ['controller' => 'employee', 'action' => 'Update'],
+      '/employee/delete' => ['controller' => 'employee', 'action' => 'delete'],
+      '/employee/deleteCheck' => ['controller' => 'employee', 'action' => 'deleteCheck'],
+      '/employee/deleteComplete' => ['controller' => 'employee', 'action' => 'deleteComplete'],
     ];
   }
 
