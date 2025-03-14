@@ -96,7 +96,7 @@ class EmployeeController extends Controller
     // todo 選択した社員情報を表示するupdateページを作成
     return $this->render(
       [
-        'title' => '社員情報の修正',
+        'title' => '社員情報の更新完了',
         'selectEmployee' => $selectEmployee,
       ]
     );
@@ -121,7 +121,6 @@ class EmployeeController extends Controller
   {
     return in_array($updateEmployeeId, $existsIdNumbers);
   }
-
   private function checkUpdate($updateDetails, $selectEmployeeName, $selectEmployeeId)
   {
     if ($updateDetails['updateEmployeeName'] === '') {
