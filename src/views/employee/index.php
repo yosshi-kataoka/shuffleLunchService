@@ -17,7 +17,10 @@ use function  ShuffleLunch\escape;
       <label for="name" class="fs-4">社員名</label>
       <input type="text" class="form-control" name="name" id="name">
     </div>
-    <button type="submit" class="btn btn-primary my-3">登録する</button>
+    <div class="mt-2">
+      <button type="submit" class="btn btn-primary my-3">登録する</button>
+      <a href="/" class="btn btn-primary mx-4">トップページへ戻る</a>
+    </div>
   </form>
   <h2>社員の一覧</h2>
   <div class="card">
