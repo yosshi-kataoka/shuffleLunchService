@@ -21,7 +21,10 @@ use function  ShuffleLunch\escape;
             <option value='{"id": <?php echo escape($employeeRegister['id']); ?>, "name": "<?php echo escape($employeeRegister['name']); ?>"}' ?><?php echo escape($employeeRegister['name']) . "(ID:" . $employeeRegister['id'] . ")"; ?>&nbsp;</option>
           <?php endforeach; ?>
       </select>
-      <button type="submit" class="btn btn-danger my-3">削除へ進む</button>
+      <div class="mt-2">
+        <button type="submit" class="btn btn-danger my-3">削除へ進む</button>
+        <a href="/" class="btn btn-primary mx-3">トップページへ戻る</a>
+      </div>
     <?php else : ?>
       <h2>社員情報が登録されておりません</h2>
     <?php endif; ?>

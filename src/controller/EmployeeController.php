@@ -6,6 +6,7 @@ use HttpNotFoundException;
 
 class EmployeeController extends Controller
 {
+  // todo エラー発生時に二度ボタンを押すと404ページが表示される
   public function index()
   {
     $employeeRegisters = $this->databaseManager->get('Employee')->fetchAllNames();
@@ -70,14 +71,14 @@ class EmployeeController extends Controller
     if (!$this->request->isPost()) {
       throw new HttpNotFoundException();
     }
+    $employees = $this->databaseManager->get('Employee');
+    $employeesList = $employees->fetchAllNames();
     if ($_POST['dropdownValue'] === 'default') {
       $errors['select'] = '修正する社員が未選択です。';
     } else {
       $selectEmployee = json_decode($_POST['dropdownValue'], true);
       $selectEmployeeName = $selectEmployee['name'];
       $selectEmployeeId = $selectEmployee['id'];
-      $employees = $this->databaseManager->get('Employee');
-      $employeesList = $employees->fetchAllNames();
       $existsIdNumbers = array_column($employeesList, 'id');
       $errors = $this->validateSelect($_POST,  $selectEmployeeName, $existsIdNumbers);
     }
@@ -86,7 +87,7 @@ class EmployeeController extends Controller
         [
           'title' => '社員情報の修正',
           'errors' => $errors,
-          'employeeRegisters' => $employees,
+          'employeeRegisters' => $employeesList,
         ],
         'select'
       );

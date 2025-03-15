@@ -34,7 +34,10 @@ use function  ShuffleLunch\escape;
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary my-3">修正へ進む</button>
+      <div class="mt-2">
+        <button type="submit" class="btn btn-primary my-3">修正へ進む</button>
+        <a href="/" class="btn btn-primary mx-4">トップページへ戻る</a>
+      </div>
     <?php else : ?>
       <h2>社員情報が登録されておりません</h2>
     <?php endif; ?>
