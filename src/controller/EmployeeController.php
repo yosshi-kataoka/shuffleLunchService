@@ -7,6 +7,7 @@ use HttpNotFoundException;
 class EmployeeController extends Controller
 {
   // todo エラー発生時に二度ボタンを押すと404ページが表示される
+  // header()とrender()の処理をメソッドを分けて実装することでこの問題を回避可能
   public function index()
   {
     $employeeRegisters = $this->databaseManager->get('Employee')->fetchAllNames();
@@ -29,18 +30,19 @@ class EmployeeController extends Controller
     $employee = $this->databaseManager->get('Employee');
     $employees = $employee->fetchAllNames();
     $errors = $this->validateEmployeeName($_POST);
-    if (!count($errors)) {
-      $employee->insert($_POST['name']);
+    if (count($errors)) {
+      return $this->render(
+        [
+          'title' => '社員の登録',
+          'errors' => $errors,
+          'employeeRegisters' => $employees,
+        ],
+        'index'
+      );
     }
-
-    return $this->render(
-      [
-        'title' => '社員の登録',
-        'errors' => $errors,
-        'employeeRegisters' => $employees,
-      ],
-      'index'
-    );
+    $employee->insert($_POST['name']);
+    header("Location: /employee/createSuccess");
+    exit;
   }
 
   private function validateEmployeeName(array $employeeName): array
@@ -54,7 +56,16 @@ class EmployeeController extends Controller
     return $errors;
   }
 
-  public function select()
+  public function createSuccess()
+  {
+    return $this->render(
+      [
+        'title' => '社員を登録しました',
+      ],
+    );
+  }
+
+  public function update()
   {
     $employees = $this->databaseManager->get('Employee')->fetchAllNames();
     return $this->render(
@@ -66,7 +77,7 @@ class EmployeeController extends Controller
     );
   }
 
-  public function update()
+  public function updateProcess()
   {
     if (!$this->request->isPost()) {
       throw new HttpNotFoundException();
@@ -82,24 +93,21 @@ class EmployeeController extends Controller
       $existsIdNumbers = array_column($employeesList, 'id');
       $errors = $this->validateSelect($_POST,  $selectEmployeeName, $existsIdNumbers);
     }
-    if ($errors) {
+    if (count($errors)) {
       return $this->render(
         [
           'title' => '社員情報の修正',
           'errors' => $errors,
           'employeeRegisters' => $employeesList,
         ],
-        'select'
+        'update'
       );
+    } else {
+      $updateDetails = $this->checkUpdate($_POST, $selectEmployeeName, $selectEmployeeId);
+      $employees->update($updateDetails, $selectEmployeeId);
+      header("Location: /employee/updateSuccess");
+      exit;
     }
-    $updateDetails = $this->checkUpdate($_POST, $selectEmployeeName, $selectEmployeeId);
-    $employees->update($updateDetails, $selectEmployeeId);
-    // todo 選択した社員情報を表示するupdateページを作成
-    return $this->render(
-      [
-        'title' => '社員情報の更新完了',
-      ]
-    );
   }
 
   private function validateSelect($post, $selectEmployeeName, $existsIdNumbers): array
@@ -129,6 +137,16 @@ class EmployeeController extends Controller
       $updateDetails['updateEmployeeId'] = $selectEmployeeId;
     }
     return $updateDetails;
+  }
+
+  // todo なぜかupdate.phpが読み込まれてしまうので改善
+  public function updateSuccess()
+  {
+    return $this->render(
+      [
+        'title' => '社員を登録しました',
+      ],
+    );
   }
 
   public function delete()
@@ -174,7 +192,7 @@ class EmployeeController extends Controller
     );
   }
 
-  public function deleteComplete()
+  public function deleteProcess()
   {
     if (!$this->request->isPost()) {
       throw new HttpNotFoundException();
@@ -183,10 +201,17 @@ class EmployeeController extends Controller
     $deleteEmployeeId = $deleteEmployee['id'];
     $employee = $this->databaseManager->get('employee');
     $employee->delete($deleteEmployeeId);
+
+    header("Location: /employee/deleteSuccess");
+    exit;
+  }
+
+  public function deleteSuccess()
+  {
     return $this->render(
       [
         'title' => '社員を削除しました',
-      ]
+      ],
     );
   }
 }

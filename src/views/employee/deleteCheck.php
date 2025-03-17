@@ -5,7 +5,7 @@ use function  ShuffleLunch\escape;
 <div class="container px-0">
   <h3>社員の削除</h3>
   <h4>以下の社員を削除しますがよろしいでしょうか。</h4>
-  <form class="mb-3 fs-4" method="POST" action="deleteComplete">
+  <form class="mb-3 fs-4" method="POST" action="deleteProcess">
     <div class="card">
       <input type="hidden" name="deleteEmployee" value='{"id": <?php echo escape($deleteEmployeeId); ?>, "name": "<?php echo escape($deleteEmployeeName); ?>"}'>
       <?php echo escape($deleteEmployeeName) . "(ID:" . $deleteEmployeeId . ")"; ?>
