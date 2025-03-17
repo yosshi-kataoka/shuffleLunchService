@@ -75,12 +75,15 @@ class Application
       '/' => ['controller' => 'shuffle', 'action' => 'index'],
       '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
       '/employee' => ['controller' => 'employee', 'action' => 'index'],
-      '/employee/select' => ['controller' => 'employee', 'action' => 'select'],
       '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
-      '/employee/update' => ['controller' => 'employee', 'action' => 'Update'],
+      '/employee/createSuccess' => ['controller' => 'employee', 'action' => 'createSuccess'],
+      '/employee/update' => ['controller' => 'employee', 'action' => 'update'],
+      '/employee/updateProcess' => ['controller' => 'employee', 'action' => 'updateProcess'],
+      '/employee/updateSuccess' => ['controller' => 'employee', 'action' => 'updateSuccess'],
       '/employee/delete' => ['controller' => 'employee', 'action' => 'delete'],
       '/employee/deleteCheck' => ['controller' => 'employee', 'action' => 'deleteCheck'],
-      '/employee/deleteComplete' => ['controller' => 'employee', 'action' => 'deleteComplete'],
+      '/employee/deleteProcess' => ['controller' => 'employee', 'action' => 'deleteProcess'],
+      '/employee/deleteSuccess' => ['controller' => 'employee', 'action' => 'deleteSuccess'],
     ];
   }
 

@@ -6,7 +6,7 @@ use function  ShuffleLunch\escape;
 <div class="container px-0">
   <a href="employee" class="fs-2 inline-block text-decoration-none">
     <span class="fa-solid fa-user"></span>社員を登録する</a><br>
-  <a href="employee/select" class="fs-2 inline-block text-decoration-none">
+  <a href="employee/update" class="fs-2 inline-block text-decoration-none">
     <span class="fa-solid fa-user"></span>社員情報を変更する</a><br>
   <a href="employee/delete" class="fs-2 inline-block text-decoration-none">
     <span class="fa-solid fa-user"></span>社員を削除する</a><br>
